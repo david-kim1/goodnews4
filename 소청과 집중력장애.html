@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>길음한의원 소아청소년 집중력 척도 평가 (부모용)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .survey-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .survey-header { text-align: center; margin-bottom: 2rem; }
+        .survey-title { font-size: 1.8rem; font-weight: 700; color: #2c5282; /* Tailwind blue-800 */ }
+        .clinic-name { font-size: 1.2rem; font-weight: 600; color: #38a169; /* Tailwind green-600 */ margin-top:0.25rem; }
+        .survey-description { font-size: 0.9rem; color: #4a5568; margin-top: 0.75rem; }
+        .survey-description .highlight-instruction {
+            font-size: 1.05em; 
+            font-weight: 600; 
+            color: #c53030; 
+        }
+        
+        .section-container { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; background-color: #f7fafc; }
+        .section-title { font-size: 1.3rem; font-weight: 600; color: #2d3748; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #cbd5e0;}
+        
+        .input-group { margin-bottom:1rem; }
+        .input-group label { display: block; font-size:0.9rem; font-weight:500; margin-bottom:0.25rem; color: #4a5568; }
+        .input-field { width: 100%; padding: 0.5rem; border: 1px solid #cbd5e0; border-radius: 0.25rem; box-sizing: border-box; }
+
+        .question-list { margin-top: 1rem; }
+        .question-item { margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px dashed #e2e8f0; }
+        .question-item:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+        .question-text { display: block; font-size: 1rem; color: #2d3748; margin-bottom: 0.75rem; line-height: 1.5; }
+        .rating-options { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 0.5rem; }
+        .rating-options label {
+            display: flex; align-items: center;
+            padding: 0.5rem 0.75rem; background-color: #fff;
+            border: 1px solid #cbd5e0; border-radius: 0.25rem;
+            cursor: pointer; font-size: 0.85rem; color: #4a5568;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .rating-options input[type="radio"] { margin-right: 0.5rem; accent-color: #38a169; width: 1rem; height: 1rem;}
+        .rating-options input[type="radio"]:checked + span { font-weight: 600; color: #2c5282; }
+        .rating-options label:hover { background-color: #edf2f7; }
+
+        .submit-button { display: block; width: 100%; padding: 0.75rem; background-color: #38a169; color: white; font-size: 1.1rem; font-weight: 600; border: none; border-radius: 0.375rem; cursor: pointer; transition: background-color 0.2s; margin-top: 2rem; }
+        .submit-button:hover { background-color: #2f855a; }
+
+        .results-area { margin-top: 2rem; padding: 1.5rem; background-color: #f0fff4; border: 1px solid #9ae6b4; border-radius: 0.5rem; }
+        .results-title { font-size: 1.4rem; font-weight: 600; color: #276749; text-align: center; margin-bottom: 1.5rem; }
+        .result-item { margin-bottom: 0.75rem; font-size: 1rem; }
+        .result-item strong { color: #2c5282; }
+        .interpretation { margin-top: 1.5rem; font-size: 0.9rem; line-height: 1.6; color: #4a5568;}
+        .interpretation p { margin-bottom: 0.75rem; }
+        .interpretation .developmental-context { padding: 0.75rem; background-color: #e6fffa; border-left: 3px solid #38a169; margin-bottom:1rem; }
+        .clinic-link { display: inline-block; margin-top: 1.5rem; padding: 0.6rem 1.2rem; background-color: #3182ce; color: white; text-decoration: none; border-radius: 0.25rem; font-weight: 500; transition: background-color 0.2s; }
+        .clinic-link:hover { background-color: #2b6cb0; }
+
+        .disclaimer { margin-top: 2.5rem; padding: 1rem; background-color: #fffbeb; border-left: 4px solid #facc15; color: #713f12; font-size: 0.9rem; }
+    </style>
+</head>
+<body class="bg-gray-200 py-8">
+
+    <div class="survey-container">
+        <header class="survey-header">
+            <h1 class="survey-title">소아청소년 집중력 척도 평가</h1>
+            <p class="clinic-name">(부모님 작성용 - 길음한의원)</p>
+            <p class="survey-description"><span class="highlight-instruction">자녀의 지난 6개월간 행동을 가장 잘 나타내는 항목에 표시해 주십시오.</span></p>
+        </header>
+
+        <form id="attentionScaleForm">
+            <div class="section-container">
+                <h3 class="section-title">I. 자녀 정보 (선택)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    <div class="input-group">
+                        <label for="childName">자녀 성함:</label>
+                        <input type="text" id="childName" name="childName" class="input-field">
+                    </div>
+                    <div class="input-group">
+                        <label for="childAge">자녀 나이 (만):</label>
+                        <input type="number" id="childAge" name="childAge" class="input-field">
+                    </div>
+                     <div class="input-group md:col-span-2">
+                        <label for="childGender">자녀 성별:</label>
+                        <select id="childGender" name="childGender" class="input-field">
+                            <option value="">선택하세요</option>
+                            <option value="male">남아</option>
+                            <option value="female">여아</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <h3 class="section-title">II. 주의력 부족 (Inattention)</h3>
+                <div class="question-list">
+                    <div class="question-item">
+                        <span class="question-text">1. 학습이나 놀이 또는 다른 활동을 할 때 필요한 만큼 주의를 기울이지 못하거나, 부주의한 실수를 자주 한다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_1" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_1" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_1" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_1" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">2. 과제나 놀이를 할 때 계속해서 주의를 집중하는 데 어려움이 있다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_2" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_2" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_2" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_2" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">3. 다른 사람이 직접 이야기하는데도 귀 기울여 듣지 않는 것처럼 보일 때가 많다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_3" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_3" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_3" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_3" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                     <div class="question-item">
+                        <span class="question-text">4. 지시대로 잘 따라 하지 못하고, 학습이나 숙제, 집안일 등을 끝까지 마치지 못한다 (반항적인 행동이나 지시를 이해하지 못해서가 아님).</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_4" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_4" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_4" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_4" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">5. 과제나 활동을 체계적으로 하는 데 어려움이 있다 (예: 순서대로 하기, 물건 정리정돈하기, 마감 시간 지키기 등).</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_5" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_5" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_5" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_5" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">6. 지속적인 정신적 노력이 필요한 과제(학습, 숙제 등)를 피하거나 싫어하거나 하기를 꺼린다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_6" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_6" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_6" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_6" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">7. 과제나 활동에 필요한 물건(학용품, 책, 도구 등)을 자주 잃어버린다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_7" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_7" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_7" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_7" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">8. 외부 자극에 의해 쉽게 산만해진다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_8" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_8" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_8" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_8" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">9. 일상적인 활동을 자주 잊어버린다 (예: 약속, 숙제 가져가기 등).</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="inattention_9" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="inattention_9" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="inattention_9" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="inattention_9" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <h3 class="section-title">III. 과잉행동-충동성 (Hyperactivity-Impulsivity)</h3>
+                <div class="question-list">
+                    <div class="question-item">
+                        <span class="question-text">10. 가만히 앉아 있지 못하고 손발을 만지작거리거나 몸을 뒤튼다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_1" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_1" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_1" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_1" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">11. 앉아 있어야 하는 교실이나 다른 상황에서 자리를 자주 벗어난다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_2" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_2" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_2" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_2" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                     <div class="question-item">
+                        <span class="question-text">12. 부적절한 상황에서 지나치게 뛰어다니거나 기어오른다 (청소년의 경우 가만히 있지 못하고 안절부절못하는 느낌으로 나타날 수 있음).</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_3" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_3" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_3" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_3" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">13. 조용히 놀거나 여가 활동에 참여하는 데 어려움이 있다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_4" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_4" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_4" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_4" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">14. 끊임없이 움직이거나 마치 '모터가 달린 것처럼' 행동한다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_5" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_5" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_5" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_5" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">15. 지나치게 말이 많다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_6" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_6" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_6" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_6" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">16. 질문이 채 끝나기도 전에 불쑥 대답한다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_7" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_7" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_7" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_7" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">17. 차례를 기다리는 데 어려움이 있다.</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_8" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_8" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_8" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_8" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-text">18. 다른 사람의 활동을 방해하거나 간섭한다 (예: 대화나 게임에 불쑥 끼어듦).</span>
+                        <div class="rating-options">
+                            <label><input type="radio" name="hyper_impulse_9" value="0" required><span>전혀</span></label>
+                            <label><input type="radio" name="hyper_impulse_9" value="1"><span>가끔</span></label>
+                            <label><input type="radio" name="hyper_impulse_9" value="2"><span>자주</span></label>
+                            <label><input type="radio" name="hyper_impulse_9" value="3"><span>매우 자주</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">평가 결과 보기</button>
+        </form>
+
+        <div id="resultsArea" class="results-area hidden">
+            <h3 class="results-title">평가 결과 요약</h3>
+            <p class="result-item" id="inattentionScoreText"></p>
+            <p class="result-item" id="hyperImpulseScoreText"></p>
+            <p class="result-item" id="totalScoreText"></p>
+            <div class="interpretation">
+                </div>
+        </div>
+
+        <div class="disclaimer">
+            <strong>⚠️ 중요 안내사항 ⚠️</strong><br>
+            본 설문지는 의학적 진단을 위한 도구가 아니며, 부모님께서 자녀의 행동을 이해하는 데 도움을 드리기 위한 참고 자료입니다. 제시된 항목들은 주의력결핍 과잉행동장애(ADHD)와 관련될 수 있는 일반적인 행동 양상이며, 모든 아동에게 동일하게 적용되지 않을 수 있습니다. 이 설문 결과만으로 자녀의 상태를 판단하거나 진단을 내리셔서는 안 됩니다. 자녀의 발달, 행동, 학교생활 등에 대해 우려되는 점이 있다면, 반드시 한의사 또는 소아청소년 정신건강의학과 전문의, 또는 관련 분야 전문가와 상담하여 정확한 평가와 적절한 조언을 받으시기 바랍니다.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('attentionScaleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let inattentionScore = 0;
+            let inattentionSignificantCount = 0; 
+            for (let i = 1; i <= 9; i++) {
+                const val = parseInt(document.querySelector(`input[name="inattention_${i}"]:checked`).value);
+                inattentionScore += val;
+                if (val >= 2) { 
+                    inattentionSignificantCount++;
+                }
+            }
+
+            let hyperImpulseScore = 0;
+            let hyperImpulseSignificantCount = 0;
+            for (let i = 1; i <= 9; i++) {
+                const val = parseInt(document.querySelector(`input[name="hyper_impulse_${i}"]:checked`).value);
+                hyperImpulseScore += val;
+                if (val >= 2) {
+                    hyperImpulseSignificantCount++;
+                }
+            }
+
+            const totalScore = inattentionScore + hyperImpulseScore;
+
+            document.getElementById('inattentionScoreText').innerHTML = `<strong>주의력 부족 점수:</strong> ${inattentionScore}점 (최대 27점)`;
+            document.getElementById('hyperImpulseScoreText').innerHTML = `<strong>과잉행동-충동성 점수:</strong> ${hyperImpulseScore}점 (최대 27점)`;
+            document.getElementById('totalScoreText').innerHTML = `<strong>총점:</strong> ${totalScore}점 (최대 54점)`;
+            
+            // 수정된 결과 해석 부분
+            const interpretationDiv = document.querySelector('#resultsArea .interpretation');
+            let generalInterpretationHtml = `
+                <p class="developmental-context"><strong>결과 해석 시 참고:</strong> 제시된 항목 중 일부는 특정 연령대 아동의 정상적인 발달 과정에서 일시적으로 나타날 수 있는 행동들입니다. 
+                예를 들어, 어린 아동일수록 활동량이 많거나 집중 시간이 짧을 수 있습니다. 
+                중요한 것은 이러한 행동들이 자녀의 연령에 비해 두드러지게 나타나고, 가정, 학교(또는 유치원/어린이집), 친구 관계 등 
+                두 곳 이상의 환경에서 6개월 이상 지속되어 자녀의 일상생활이나 학습, 사회적 관계에 어려움을 초래하는지 여부입니다.</p>
+            `;
+
+            let inattentionInterpHtml = `<p>주의력 부족 영역에서 "자주" 또는 "매우 자주"로 응답한 항목 수: ${inattentionSignificantCount}개.`;
+            if (inattentionSignificantCount >= 6) { 
+                inattentionInterpHtml += " <strong class='text-red-600'>주의력 관련 어려움이 있을 수 있으니 전문가 상담을 고려해 보세요.</strong>";
+            }
+            inattentionInterpHtml += "</p>";
+            
+            let hyperImpulseInterpHtml = `<p>과잉행동-충동성 영역에서 "자주" 또는 "매우 자주"로 응답한 항목 수: ${hyperImpulseSignificantCount}개.`;
+            if (hyperImpulseSignificantCount >= 6) { 
+                hyperImpulseInterpHtml += " <strong class='text-red-600'>과잉행동/충동성 관련 어려움이 있을 수 있으니 전문가 상담을 고려해 보세요.</strong>";
+            }
+            hyperImpulseInterpHtml += "</p>";
+
+            interpretationDiv.innerHTML = `
+                ${generalInterpretationHtml}
+                ${inattentionInterpHtml}
+                ${hyperImpulseInterpHtml}
+                <p class="mt-4"><strong>종합 안내:</strong> 이 평가는 참고용입니다. 만약 주의력 부족 영역 또는 과잉행동-충동성 영역 중 하나 이상에서 "자주" 또는 "매우 자주"로 응답한 항목이 <strong>6개 이상</strong>이거나, 총점이 높게 나타난다면 자녀의 어려움에 대해 전문가와 상담해 보시는 것이 좋습니다.</p>
+                <p>정확한 진단과 적절한 지원은 전문가의 평가를 통해 이루어질 수 있습니다.</p>
+                <a href="https://goodnewshani.my.canva.site/" target="_blank" class="clinic-link">길음한의원 홈페이지 바로가기</a>
+            `;
+
+            document.getElementById('resultsArea').classList.remove('hidden');
+            document.getElementById('resultsArea').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+
+</body>
+</html>
